@@ -12,11 +12,13 @@
 
 	<main>
 		<div>Val is {getAge()} years old</div>
-		<button on:click={celebrate}>Let's celebrate!</button>
+		<div>
+			<button on:click={celebrate}>Let's celebrate!</button>
+		</div>
 	</main>
 
 	<footer>
-		<p><a href="https://github.com/terracota-p/val-birthday">source</a></p>
+		<span><a href="https://github.com/terracota-p/val-birthday">source</a></span>
 	</footer>
 </div>
 
@@ -27,9 +29,35 @@
 		min-height: 100vh;
 	}
 
+	header {
+		text-align: center;
+	}
+
+	main {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		padding: 1rem;
+		width: 100%;
+		margin: 0 auto;
+		box-sizing: border-box;
+		text-align: center;
+	}
+
+	footer {
+		display: flex;
+		justify-content: center;
+		padding: 12px;
+	}
+
 	button {
 		text-align: center;
 		background-color: black;
 		color: white;
+	}
+
+	button:hover {
+		background-color: white;
+		color: black;
 	}
 </style>
