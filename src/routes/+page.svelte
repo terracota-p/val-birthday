@@ -1,4 +1,5 @@
 <script>
+	import './styles.css';
 	import { getAge } from '$lib/age';
 
 	function celebrate() {
@@ -6,7 +7,17 @@
 	}
 </script>
 
-<h1>Val's Birthday</h1>
+<div>
+	<h1>Val's Birthday</h1>
 
-<div>Val is {getAge()} years old</div>
-<button on:click={celebrate}>Let's celebrate!</button>
+	<div>Val is {getAge()} years old</div>
+	<button on:click={celebrate}>Let's celebrate!</button>
+</div>
+
+<style>
+	button {
+		text-align: center;
+		background-color: black;
+		color: white;
+	}
+</style>
