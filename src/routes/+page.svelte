@@ -50,13 +50,28 @@
 		padding: 12px;
 	}
 
+	div {
+		display: flex;
+		justify-content: center;
+	}
+
 	button {
 		text-align: center;
 		background-color: black;
 		color: white;
-		/* TODO bigger button */
 		height: 4rem;
-		width: 30rem;
+	}
+
+	@media screen and (min-width: 32rem) {
+		button {
+			width: 30rem;
+		}
+	}
+
+	@media screen and (max-width: 32rem) {
+		button {
+			width: 100vw;
+		}
 	}
 
 	button:hover {
