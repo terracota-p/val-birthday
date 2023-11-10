@@ -54,6 +54,9 @@
 		text-align: center;
 		background-color: black;
 		color: white;
+		/* TODO bigger button */
+		height: 4rem;
+		width: 30rem;
 	}
 
 	button:hover {
