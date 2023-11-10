@@ -1,10 +1,6 @@
 <script>
-  import song from "./stephen-hawking-happy-birthday-valeria.mp3"
-
 	function celebrate() {
-    const audio = new Audio();
-    audio.src = song;
-		audio.play();
+		new Audio('./stephen-hawking-happy-birthday-valeria.mp3').play();
 	}
 </script>
 
