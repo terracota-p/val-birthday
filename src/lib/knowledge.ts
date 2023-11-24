@@ -2,9 +2,8 @@ import { derived, writable, type Writable } from 'svelte/store';
 
 export const key: Writable<string | null> = writable(null);
 
-export const validKey = derived(key, ($key) => (($key?.length ?? 0) < 3 ? null : $key));
 let _validKey: string | null = null;
-validKey.subscribe((value) => {
+key.subscribe((value) => {
 	_validKey = value;
 });
 
