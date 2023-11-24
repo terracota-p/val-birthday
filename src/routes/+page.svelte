@@ -29,7 +29,13 @@
 			<div class="vertical section">
 				<div>Generate or access a piece of knowledge:</div>
 				<div>
-					<input type="text" placeholder="use a key or generate a new one" style="width: 32em;" />
+					<input
+						type="text"
+						placeholder="use a key or generate a new one"
+						style="width: 32em;"
+						autofocus
+						on:input={(e) => (validKey = e.currentTarget.value)}
+					/>
 				</div>
 				<div>
 					<button on:click={() => (validKey = 'foo')}>Generate</button>
@@ -37,7 +43,9 @@
 				</div>
 				{#if validKey}
 					<textarea
-						placeholder="that key is rusted, but it works; you can write here a piece of knowledge"
+						placeholder="That key is rusted, but it works.
+You can write here a piece of knowledge."
+						rows="10"
 					/>
 				{/if}
 			</div>
