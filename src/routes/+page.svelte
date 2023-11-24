@@ -32,10 +32,13 @@
 
 		{#if celebrated}
 			<div class="vertical section">
-				<div>Generate or access a piece of knowledge:</div>
+				<div>
+					<label for="key">Generate or access a piece of knowledge:</label>
+				</div>
 				<div>
 					<!-- svelte-ignore a11y-autofocus -->
 					<input
+						id="key"
 						type="text"
 						placeholder="use a key or generate a new one"
 						style="width: 32em;"
