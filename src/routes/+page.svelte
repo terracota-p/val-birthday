@@ -47,6 +47,9 @@
 					<!-- TODO replace disabled with blurred style -->
 					<button disabled={$validKey == null} on:click={save}>Save</button>
 				</div>
+				{#if $key && !$validKey}
+					<div>The right key gives knowledge, but the wrong one takes it. Choose wisely.</div>
+				{/if}
 				{#if $validKey}
 					<div>That key is rusted, but works.</div>
 					<textarea
