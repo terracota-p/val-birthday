@@ -52,6 +52,8 @@ button {
 
 input {
 	text-align: center;
+	background-color: black;
+	color: white;
 }
 
 @media screen and (min-width: 32rem) {
