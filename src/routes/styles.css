@@ -67,6 +67,10 @@ button:hover {
 	color: black;
 }
 
+*:focus {
+	outline: 2px solid #ccc;
+}
+
 input {
 	text-align: center;
 	background-color: black;
@@ -76,4 +80,7 @@ input {
 textarea {
 	background-color: black;
 	color: white;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	box-shadow: 1px 1px 1px #999;
 }
