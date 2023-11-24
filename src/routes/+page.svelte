@@ -13,6 +13,10 @@
 	 * @type {string | null}
 	 */
 	let validKey = null;
+
+	function generate() {
+		validKey = 'foo-1234';
+	}
 </script>
 
 <div class="app">
@@ -36,19 +40,16 @@
 						placeholder="use a key or generate a new one"
 						style="width: 32em;"
 						autofocus
-						on:input={(e) => (validKey = e.currentTarget.value)}
+						bind:value={validKey}
 					/>
 				</div>
 				<div>
-					<button on:click={() => (validKey = 'foo')}>Generate</button>
+					<button on:click={generate}>Generate</button>
 					<button disabled={validKey == null}>Save</button>
 				</div>
 				{#if validKey}
-					<textarea
-						placeholder="That key is rusted, but it works.
-You can write here a piece of knowledge."
-						rows="10"
-					/>
+					<div>That key is rusted, but works.</div>
+					<textarea placeholder="You can write here a piece of knowledge." rows="10" />
 				{/if}
 			</div>
 		{/if}
