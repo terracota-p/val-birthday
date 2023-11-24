@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { generate, key, knowledge, load, save, validKey } from './knowledge';
 import { get } from 'svelte/store';
+import { describe, expect, it } from 'vitest';
+import { generate, key, knowledge, load, save } from './knowledge';
 
 describe('knowledge', () => {
 	it('should start with no key or knowledge', () => {
@@ -15,18 +15,19 @@ describe('knowledge', () => {
 		expect(get(knowledge)).toBeNull();
 	});
 
-	it('should store and get knowledge by key', () => {
+	it('should retrieve knowledge by key', () => {
 		generate();
 		const axiom = 'I think, therefore I exist';
 		knowledge.set(axiom);
-
 		save();
+
+		load();
 
 		expect(get(key)).not.empty;
 		expect(get(knowledge)).toEqual(axiom);
 	});
 
-	it('should not get knowledge with invalid key', () => {
+	it('should not retrieve knowledge with invalid key', () => {
 		generate();
 		const axiom = 'I think, therefore I exist';
 		knowledge.set(axiom);
@@ -38,9 +39,18 @@ describe('knowledge', () => {
 		expect(get(knowledge)).toBeNull();
 	});
 
-	// it('should be invalid key', () => {
-	// 	key.set('fo');
+	it('should update saved knowledge', () => {
+		generate();
+		const axiom = 'I think, therefore I exist';
+		knowledge.set(axiom);
+		save();
 
-	// 	expect(get(validKey)).toBeNull();
-	// });
+		const updatedAxiom = axiom + "... I'm alive.";
+		knowledge.set(updatedAxiom);
+		save();
+
+		load();
+		expect(get(key)).not.empty;
+		expect(get(knowledge)).toEqual(updatedAxiom);
+	});
 });
