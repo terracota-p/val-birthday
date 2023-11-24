@@ -50,6 +50,10 @@ button {
 	height: 4rem;
 }
 
+input {
+	text-align: center;
+}
+
 @media screen and (min-width: 32rem) {
 	button {
 		width: 30rem;

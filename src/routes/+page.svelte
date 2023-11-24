@@ -23,7 +23,9 @@
 		{#if celebrated}
 			<div class="vertical section">
 				<div>Generate or access a piece of knowledge:</div>
-				<input type="text" placeholder="use a key or generate a new one" />
+				<div>
+					<input type="text" placeholder="use a key or generate a new one" style="width: 32em;" />
+				</div>
 			</div>
 		{/if}
 	</main>
