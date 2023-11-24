@@ -1,60 +1,13 @@
-<script>
-	import './styles.css';
+<script lang="ts">
 	import { getAge } from '$lib/age';
+	import { generate, validKey, key, load, save, knowledge } from '../lib/knowledge';
+	import './styles.css';
 
 	let celebrated = false;
 	function celebrate() {
 		// TODO temp disabled
 		// new Audio('./stephen-hawking-happy-birthday-valeria.mp3').play();
 		celebrated = true;
-	}
-
-	/**
-	 * @type {string | null}
-	 */
-	let validKey = null;
-	/**
-	 * @type {string | null}
-	 */
-	let knowledge = null;
-	const repository = { foo: 'Foo is great', bar: 'A bar is a bar' };
-
-	function generate() {
-		// TODO uuid
-		validKey = 'foo-1234';
-		key = validKey;
-		// XXX history facts
-		knowledge = null;
-		save();
-	}
-
-	function save() {
-		// TODO save
-		console.log('save key, knowledge =', validKey, knowledge);
-		if (validKey) {
-			// TODO temp
-			// @ts-ignore
-			repository[validKey] = knowledge;
-		}
-	}
-
-	/**
-	 * @type {string | null}
-	 */
-	let key;
-	function load() {
-		if (!key) {
-			validKey = null;
-			return;
-		}
-		// TODO temp
-		// @ts-ignore
-		const _knowledge = repository[key];
-		if (_knowledge) {
-			validKey = key;
-			knowledge = _knowledge;
-			console.log('loaded key, knowledge =', key, knowledge);
-		}
 	}
 </script>
 
@@ -83,23 +36,23 @@
 						placeholder="use a key or generate a new one"
 						style="width: 32em;"
 						autofocus
-						bind:value={key}
+						bind:value={$key}
 						on:input={load}
 					/>
 				</div>
 				<div>
 					<!-- TODO replace disabled with blurred style (and on click show tooltip eg "remove the key before generating a new one") -->
-					<button disabled={validKey != null} on:click={generate}>Generate</button>
+					<button disabled={$validKey != null} on:click={generate}>Generate</button>
 					<!-- TODO disabled until knowledge changed -->
 					<!-- TODO replace disabled with blurred style -->
-					<button disabled={validKey == null} on:click={save}>Save</button>
+					<button disabled={$validKey == null} on:click={save}>Save</button>
 				</div>
-				{#if validKey}
+				{#if $validKey}
 					<div>That key is rusted, but works.</div>
 					<textarea
 						placeholder="You can write here a piece of knowledge."
 						rows="10"
-						bind:value={knowledge}
+						bind:value={$knowledge}
 					/>
 				{/if}
 			</div>
