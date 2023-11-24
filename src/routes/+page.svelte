@@ -29,7 +29,7 @@
 				</div>
 				<div>
 					<!-- svelte-ignore a11y-autofocus -->
-					<!-- TODO on input load (check isValid key, fetch knowledge) -->
+					<!-- TODO convert to non-editable (don't allow changing key, eg show tooltip) if `unsavedKnowledge` -->
 					<input
 						id="key"
 						type="text"
@@ -41,10 +41,11 @@
 					/>
 				</div>
 				<div>
-					<!-- TODO replace disabled with blurred style (and on click show tooltip eg "remove the key before generating a new one") -->
+					<!-- XXX replace disabled with blurred style (and on click show tooltip eg "remove the key before generating a new one") -->
+					<!-- TODO `unsavedKnowledge` instead of `$validKey` -->
 					<button disabled={$validKey != null} on:click={generate}>Generate</button>
-					<!-- TODO disabled until knowledge changed -->
-					<!-- TODO replace disabled with blurred style -->
+					<!-- XXX replace disabled with blurred style -->
+					<!-- TODO disabled until `unsavedKnowledge` -->
 					<button disabled={$validKey == null} on:click={save}>Save</button>
 				</div>
 				{#if $key && !$validKey}

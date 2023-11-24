@@ -21,14 +21,11 @@ knowledge.subscribe((value) => (_knowledge = value));
 export function generate() {
 	// TODO uuid
 	key.set('foo-1234');
-	// XXX history facts
 	knowledge.set(null);
 	save();
 }
 
 export function save() {
-	// TODO save
-	console.log('save key, knowledge =', _validKey, _knowledge);
 	if (_validKey == null) {
 		return;
 	}
@@ -36,13 +33,8 @@ export function save() {
 }
 
 export function load() {
-	console.log('load key =', _validKey);
 	if (!_validKey) {
 		return;
 	}
-	const _knowledge = repository[_validKey];
-	if (_knowledge) {
-		knowledge.set(_knowledge);
-		console.log('loaded key, knowledge =', _validKey, _knowledge);
-	}
+	knowledge.set(repository[_validKey] ?? null);
 }

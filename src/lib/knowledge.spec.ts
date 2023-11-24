@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { generate, key, knowledge, save, validKey } from './knowledge';
+import { generate, key, knowledge, load, save, validKey } from './knowledge';
 import { get } from 'svelte/store';
 
 describe('knowledge', () => {
@@ -26,13 +26,17 @@ describe('knowledge', () => {
 		expect(get(knowledge)).toEqual(axiom);
 	});
 
-	// it('should get knowledge by key', () => {
-	// 	save();
+	it('should not get knowledge with invalid key', () => {
+		generate();
+		const axiom = 'I think, therefore I exist';
+		knowledge.set(axiom);
+		save();
 
-	// 	key.set('asdf');
+		key.set('invalid-key');
+		load();
 
-	// 	expect(get(validKey)).toEqual('asdf');
-	// });
+		expect(get(knowledge)).toBeNull();
+	});
 
 	// it('should be invalid key', () => {
 	// 	key.set('fo');
