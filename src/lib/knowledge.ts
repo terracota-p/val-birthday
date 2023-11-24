@@ -2,18 +2,14 @@ import { derived, writable, type Writable } from 'svelte/store';
 
 export const key: Writable<string | null> = writable(null);
 
-export const validKey = derived(key, ($key) => {
-	const r = ($key?.length ?? 0) < 3 ? null : $key;
-	console.log('derive =', $key, $key?.length, r);
-	return r;
-});
+export const validKey = derived(key, ($key) => (($key?.length ?? 0) < 3 ? null : $key));
 let _validKey: string | null = null;
 validKey.subscribe((value) => {
 	_validKey = value;
 	console.log('_validKey =', _validKey);
 });
 
-export const repository: { [key: string]: string | null } = {
+const repository: { [key: string]: string | null } = {
 	foo: 'Foo is great',
 	bar: 'A bar is a bar'
 };
@@ -50,5 +46,3 @@ export function load() {
 		console.log('loaded key, knowledge =', _validKey, _knowledge);
 	}
 }
-
-export const getValidKey = () => _validKey;

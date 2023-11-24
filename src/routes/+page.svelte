@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getAge } from '$lib/age';
-	import { generate, validKey, key, load, save, knowledge } from '../lib/knowledge';
+	import { generate, key, knowledge, load, save, validKey } from '../lib/knowledge';
 	import './styles.css';
 
 	let celebrated = false;
