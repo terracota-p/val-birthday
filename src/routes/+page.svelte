@@ -4,7 +4,8 @@
 
 	let celebrated = false;
 	function celebrate() {
-		new Audio('./stephen-hawking-happy-birthday-valeria.mp3').play();
+		// TODO temp disabled
+		// new Audio('./stephen-hawking-happy-birthday-valeria.mp3').play();
 		celebrated = true;
 	}
 
@@ -29,6 +30,7 @@
 			<div class="vertical section">
 				<div>Generate or access a piece of knowledge:</div>
 				<div>
+					<!-- svelte-ignore a11y-autofocus -->
 					<input
 						type="text"
 						placeholder="use a key or generate a new one"
