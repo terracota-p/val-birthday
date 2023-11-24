@@ -1,12 +1,9 @@
-import { derived, writable, type Writable } from 'svelte/store';
+import { writable, type Writable } from 'svelte/store';
 
 export const key: Writable<string | null> = writable(null);
 
-let _validKey: string | null = null;
-key.subscribe((value) => {
-	_validKey = value;
-});
-
+let _key: string | null = null;
+key.subscribe((value) => (_key = value));
 const repository: { [key: string]: string | null } = {
 	foo: 'Foo is great',
 	bar: 'A bar is a bar'
@@ -24,15 +21,16 @@ export function generate() {
 }
 
 export function save() {
-	if (_validKey == null) {
+	if (_key == null) {
 		return;
 	}
-	repository[_validKey] = _knowledge;
+	repository[_key] = _knowledge;
 }
 
 export function load() {
-	if (!_validKey) {
+	if (!_key) {
+		knowledge.set(null);
 		return;
 	}
-	knowledge.set(repository[_validKey] ?? null);
+	knowledge.set(repository[_key] ?? null);
 }
