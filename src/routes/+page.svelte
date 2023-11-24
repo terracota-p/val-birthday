@@ -2,8 +2,10 @@
 	import './styles.css';
 	import { getAge } from '$lib/age';
 
+	let celebrated = false;
 	function celebrate() {
 		new Audio('./stephen-hawking-happy-birthday-valeria.mp3').play();
+		celebrated = true;
 	}
 </script>
 
@@ -11,10 +13,19 @@
 	<header><h1>Val's Birthday</h1></header>
 
 	<main>
-		<div>Val is {getAge()} years old</div>
-		<div>
-			<button on:click={celebrate}>Let's celebrate!</button>
+		<div class="vertical section">
+			<div>Val is {getAge()} years old</div>
+			<div>
+				<button on:click={celebrate}>Let's celebrate!</button>
+			</div>
 		</div>
+
+		{#if celebrated}
+			<div class="vertical section">
+				<div>Generate or access a piece of knowledge:</div>
+				<input type="text" placeholder="use a key or generate a new one" />
+			</div>
+		{/if}
 	</main>
 
 	<footer>
@@ -52,6 +63,15 @@
 	div {
 		display: flex;
 		justify-content: center;
+	}
+
+	.vertical {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.section {
+		margin: 2em;
 	}
 
 	button {
