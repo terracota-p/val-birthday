@@ -6,7 +6,6 @@ export const validKey = derived(key, ($key) => (($key?.length ?? 0) < 3 ? null :
 let _validKey: string | null = null;
 validKey.subscribe((value) => {
 	_validKey = value;
-	console.log('_validKey =', _validKey);
 });
 
 const repository: { [key: string]: string | null } = {
