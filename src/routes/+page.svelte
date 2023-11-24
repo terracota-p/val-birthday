@@ -16,7 +16,7 @@
 		<div class="vertical section">
 			<div>Val is {getAge()} years old</div>
 			<div>
-				<button on:click={celebrate}>Let's celebrate!</button>
+				<button class="big" on:click={celebrate}>Let's celebrate!</button>
 			</div>
 		</div>
 
@@ -25,6 +25,10 @@
 				<div>Generate or access a piece of knowledge:</div>
 				<div>
 					<input type="text" placeholder="use a key or generate a new one" style="width: 32em;" />
+				</div>
+				<div>
+					<button>Generate</button>
+					<button>Save</button>
 				</div>
 			</div>
 		{/if}
