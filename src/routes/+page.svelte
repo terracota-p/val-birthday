@@ -7,6 +7,11 @@
 		new Audio('./stephen-hawking-happy-birthday-valeria.mp3').play();
 		celebrated = true;
 	}
+
+	/**
+	 * @type {string | null}
+	 */
+	let validKey = null;
 </script>
 
 <div class="app">
@@ -27,9 +32,14 @@
 					<input type="text" placeholder="use a key or generate a new one" style="width: 32em;" />
 				</div>
 				<div>
-					<button>Generate</button>
-					<button>Save</button>
+					<button on:click={() => (validKey = 'foo')}>Generate</button>
+					<button disabled={validKey == null}>Save</button>
 				</div>
+				{#if validKey}
+					<textarea
+						placeholder="that key is rusted, but it works; you can write here a piece of knowledge"
+					/>
+				{/if}
 			</div>
 		{/if}
 	</main>
