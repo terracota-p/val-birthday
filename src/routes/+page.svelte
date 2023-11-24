@@ -41,13 +41,12 @@
 		width: 100%;
 		margin: 0 auto;
 		box-sizing: border-box;
-		text-align: center;
 	}
 
 	footer {
 		display: flex;
 		justify-content: center;
-		padding: 12px;
+		padding: 1em;
 	}
 
 	div {
