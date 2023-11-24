@@ -17,16 +17,42 @@
 	 * @type {string | null}
 	 */
 	let knowledge = null;
+	const repository = { foo: 'Foo is great', bar: 'A bar is a bar' };
 
 	function generate() {
 		// TODO uuid
 		validKey = 'foo-1234';
-		// TODO save
+		key = validKey;
+		save();
 	}
 
 	function save() {
 		// TODO save
-		console.log('save knowledge =', knowledge);
+		console.log('save key, knowledge =', validKey, knowledge);
+		if (validKey) {
+			// TODO temp
+			// @ts-ignore
+			repository[validKey] = knowledge;
+		}
+	}
+
+	/**
+	 * @type {string | null}
+	 */
+	let key;
+	function load() {
+		if (!key) {
+			validKey = null;
+			return;
+		}
+		// TODO temp
+		// @ts-ignore
+		const _knowledge = repository[key];
+		if (_knowledge) {
+			validKey = key;
+			knowledge = _knowledge;
+			console.log('loaded key, knowledge =', key, knowledge);
+		}
 	}
 </script>
 
@@ -48,14 +74,15 @@
 				</div>
 				<div>
 					<!-- svelte-ignore a11y-autofocus -->
-					<!-- TODO onchange load (check isValid key, fetch knowledge) -->
+					<!-- TODO on input load (check isValid key, fetch knowledge) -->
 					<input
 						id="key"
 						type="text"
 						placeholder="use a key or generate a new one"
 						style="width: 32em;"
 						autofocus
-						bind:value={validKey}
+						bind:value={key}
+						on:input={load}
 					/>
 				</div>
 				<div>
