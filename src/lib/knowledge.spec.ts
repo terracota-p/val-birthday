@@ -8,11 +8,11 @@ describe('knowledge', () => {
 		expect(get(knowledge)).toBeNull();
 	});
 
-	it('should generate key', () => {
+	it('should generate key with empty knowledge', () => {
 		generate();
 
 		expect(get(key)).not.empty;
-		expect(get(knowledge)).toBeNull();
+		expect(get(knowledge)).toEqual('');
 	});
 
 	it('should retrieve knowledge by key', () => {

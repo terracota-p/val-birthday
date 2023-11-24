@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getAge } from '$lib/age';
-	import { generate, key, knowledge, load, save, validKey } from '../lib/knowledge';
+	import { generate, key, knowledge, load, save } from '../lib/knowledge';
 	import './styles.css';
 
 	let celebrated = false;
@@ -42,16 +42,15 @@
 				</div>
 				<div>
 					<!-- XXX replace disabled with blurred style (and on click show tooltip eg "remove the key before generating a new one") -->
-					<!-- TODO `unsavedKnowledge` instead of `$validKey` -->
-					<button disabled={$validKey != null} on:click={generate}>Generate</button>
+					<button disabled={$knowledge != null} on:click={generate}>Generate</button>
 					<!-- XXX replace disabled with blurred style -->
-					<!-- TODO disabled until `unsavedKnowledge` -->
-					<button disabled={$validKey == null} on:click={save}>Save</button>
+					<!-- TODO enabled if `unsavedKnowledge` -->
+					<button disabled={$knowledge == null} on:click={save}>Save</button>
 				</div>
-				{#if $key && !$validKey}
+				{#if $key && $knowledge == null}
 					<div>The right key gives knowledge, but the wrong one takes it. Choose wisely.</div>
 				{/if}
-				{#if $validKey}
+				{#if $knowledge != null}
 					<div>That key is rusted, but works.</div>
 					<textarea
 						placeholder="You can write here a piece of knowledge."

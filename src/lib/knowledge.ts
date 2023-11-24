@@ -20,7 +20,7 @@ knowledge.subscribe((value) => (_knowledge = value));
 export function generate() {
 	// TODO uuid
 	key.set('foo-1234');
-	knowledge.set(null);
+	knowledge.set('');
 	save();
 }
 
