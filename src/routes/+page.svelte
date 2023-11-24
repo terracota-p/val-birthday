@@ -13,9 +13,20 @@
 	 * @type {string | null}
 	 */
 	let validKey = null;
+	/**
+	 * @type {string | null}
+	 */
+	let knowledge = null;
 
 	function generate() {
+		// TODO uuid
 		validKey = 'foo-1234';
+		// TODO save
+	}
+
+	function save() {
+		// TODO save
+		console.log('save knowledge =', knowledge);
 	}
 </script>
 
@@ -37,6 +48,7 @@
 				</div>
 				<div>
 					<!-- svelte-ignore a11y-autofocus -->
+					<!-- TODO onchange load (check isValid key, fetch knowledge) -->
 					<input
 						id="key"
 						type="text"
@@ -47,12 +59,19 @@
 					/>
 				</div>
 				<div>
-					<button on:click={generate}>Generate</button>
-					<button disabled={validKey == null}>Save</button>
+					<!-- TODO replace disabled with blurred style (and on click show tooltip eg "remove the key before generating a new one") -->
+					<button disabled={validKey != null} on:click={generate}>Generate</button>
+					<!-- TODO disabled until knowledge changed -->
+					<!-- TODO replace disabled with blurred style -->
+					<button disabled={validKey == null} on:click={save}>Save</button>
 				</div>
 				{#if validKey}
 					<div>That key is rusted, but works.</div>
-					<textarea placeholder="You can write here a piece of knowledge." rows="10" />
+					<textarea
+						placeholder="You can write here a piece of knowledge."
+						rows="10"
+						bind:value={knowledge}
+					/>
 				{/if}
 			</div>
 		{/if}
