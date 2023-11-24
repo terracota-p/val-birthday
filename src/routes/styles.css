@@ -56,12 +56,6 @@ button.big {
 	width: 30rem;
 }
 
-input {
-	text-align: center;
-	background-color: black;
-	color: white;
-}
-
 @media screen and (max-width: 32rem) {
 	button.big {
 		width: 100vw;
@@ -71,4 +65,15 @@ input {
 button:hover {
 	background-color: white;
 	color: black;
+}
+
+input {
+	text-align: center;
+	background-color: black;
+	color: white;
+}
+
+textarea {
+	background-color: black;
+	color: white;
 }
