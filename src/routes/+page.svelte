@@ -23,6 +23,8 @@
 		// TODO uuid
 		validKey = 'foo-1234';
 		key = validKey;
+		// XXX history facts
+		knowledge = null;
 		save();
 	}
 
