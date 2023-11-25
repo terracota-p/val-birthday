@@ -85,7 +85,7 @@ textarea {
 	background-color: black;
 	color: white;
 	border-radius: 5px;
-	/* TODO var colors */
+	/* XXX var colors */
 	border: 1px solid #ccc;
 	box-shadow: 1px 1px 1px #999;
 }
