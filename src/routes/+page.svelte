@@ -11,6 +11,19 @@
 	}
 
 	let generated = false;
+
+	function getTooltip() {
+		if ($key && $knowledge == null) {
+			return 'The right key gives knowledge, but the wrong one takes it. Choose wisely.';
+		}
+		if (generated && !$knowledge) {
+			return 'Keep this key in a safe place for later access.';
+		}
+		if (!generated && $knowledge != null) {
+			return 'That key is rusted, but works.';
+		}
+		return '';
+	}
 </script>
 
 <div class="app">
@@ -61,15 +74,9 @@
 					<button data-testid="save" disabled={$knowledge == null} on:click={save}>Save</button>
 				</div>
 
-				{#if $key && $knowledge == null}
-					<div>The right key gives knowledge, but the wrong one takes it. Choose wisely.</div>
-				{/if}
-				{#if generated && !$knowledge}
-					<div>Keep this key in a safe place for later access.</div>
-				{/if}
-				{#if !generated && $knowledge != null}
-					<div>That key is rusted, but works.</div>
-				{/if}
+				<div class="tooltip">
+					{getTooltip()}
+				</div>
 
 				{#if $knowledge != null}
 					<textarea
