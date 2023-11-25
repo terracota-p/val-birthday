@@ -14,7 +14,8 @@
 
 	let generated = false;
 
-	function getTooltip() {
+	function getTooltip($key: string | null, generated: boolean, $knowledge: string | null) {
+		console.log('getTooltip');
 		if ($key && $knowledge == null) {
 			return 'The right key gives knowledge, but the wrong one takes it. Choose wisely.';
 		}
@@ -81,7 +82,7 @@
 				</div>
 
 				<div class="tooltip">
-					{getTooltip()}
+					{getTooltip($key, generated, $knowledge)}
 				</div>
 
 				{#if $knowledge != null}
