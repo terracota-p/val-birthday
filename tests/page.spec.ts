@@ -26,7 +26,7 @@ test('should not give knowledge with wrong key', async ({ page }) => {
 
 	await page.getByTestId('key').fill('wrong-key');
 
-	await expect(page.getByTestId('knowledge')).not.toBeVisible();
+	await expect(page.getByTestId('knowledge')).toBeHidden();
 });
 
 test('should save and retrieve knowledge', async ({ page }) => {
@@ -40,7 +40,7 @@ test('should save and retrieve knowledge', async ({ page }) => {
 	await page.getByTestId('save').click();
 
 	await page.getByTestId('key').fill('wrong-key');
-	await expect(page.getByTestId('knowledge')).not.toBeVisible();
+	await expect(page.getByTestId('knowledge')).toBeHidden();
 
 	await page.getByTestId('key').fill(generatedKey);
 	await expect(page.getByTestId('knowledge')).toBeVisible();
