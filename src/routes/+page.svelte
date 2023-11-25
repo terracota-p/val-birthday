@@ -18,7 +18,7 @@
 		<div class="vertical section">
 			<div>Val is {getAge()} years old</div>
 			<div>
-				<button class="big" on:click={celebrate}>Let's celebrate!</button>
+				<button data-testid="celebrate" class="big" on:click={celebrate}>Let's celebrate!</button>
 			</div>
 		</div>
 
@@ -31,6 +31,7 @@
 					<!-- svelte-ignore a11y-autofocus -->
 					<!-- XXX convert to non-editable (don't allow changing key, eg show tooltip) if `unsavedKnowledge` -->
 					<input
+						data-testid="key"
 						id="key"
 						type="text"
 						placeholder="use a key or generate a new one"
@@ -42,10 +43,12 @@
 				</div>
 				<div>
 					<!-- XXX replace disabled with blurred style (and on click show tooltip eg "remove the key before generating a new one") -->
-					<button disabled={$knowledge != null} on:click={generate}>Generate</button>
+					<button data-testid="generate" disabled={$knowledge != null} on:click={generate}
+						>Generate</button
+					>
 					<!-- XXX replace disabled with blurred style -->
 					<!-- XXX enabled if `unsavedKnowledge` -->
-					<button disabled={$knowledge == null} on:click={save}>Save</button>
+					<button data-testid="save" disabled={$knowledge == null} on:click={save}>Save</button>
 				</div>
 				{#if $key && $knowledge == null}
 					<div>The right key gives knowledge, but the wrong one takes it. Choose wisely.</div>
@@ -53,6 +56,7 @@
 				{#if $knowledge != null}
 					<div>That key is rusted, but works.</div>
 					<textarea
+						data-testid="knowledge"
 						placeholder="You can write here a piece of knowledge."
 						rows="10"
 						bind:value={$knowledge}

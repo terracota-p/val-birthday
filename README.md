@@ -10,16 +10,23 @@ npm i
 
 ## Run
 
-```bash
+```sh
 # start dev server and open app in browser
 npm run dev -- --open
+```
+
+## Test
+
+```sh
+# unit & integration tests
+npm test
 ```
 
 ## Build
 
 Prod version:
 
-```bash
+```sh
 npm run build
 ```
 
