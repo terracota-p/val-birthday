@@ -3,6 +3,8 @@
 	import { generate, key, knowledge, load, save } from '../lib/knowledge';
 	import './styles.css';
 
+	export let data;
+
 	let celebrated = false;
 	function celebrate() {
 		// XXX temp disabled
@@ -28,6 +30,10 @@
 
 <div class="app">
 	<header><h1>Val's Birthday</h1></header>
+
+	<div>
+		{data?.user}
+	</div>
 
 	<main>
 		<div class="vertical section">
