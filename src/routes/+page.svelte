@@ -9,6 +9,8 @@
 		// new Audio('./stephen-hawking-happy-birthday-valeria.mp3').play();
 		celebrated = true;
 	}
+
+	let generated = false;
 </script>
 
 <div class="app">
@@ -38,23 +40,38 @@
 						style="width: 32em;"
 						autofocus
 						bind:value={$key}
-						on:input={load}
+						on:input={() => {
+							generated = false;
+							load();
+						}}
 					/>
 				</div>
 				<div>
 					<!-- XXX replace disabled with blurred style (and on click show tooltip eg "remove the key before generating a new one") -->
-					<button data-testid="generate" disabled={$knowledge != null} on:click={generate}
-						>Generate</button
+					<button
+						data-testid="generate"
+						disabled={$knowledge != null}
+						on:click={() => {
+							generated = true;
+							generate();
+						}}>Generate</button
 					>
 					<!-- XXX replace disabled with blurred style -->
 					<!-- XXX enabled if `unsavedKnowledge` -->
 					<button data-testid="save" disabled={$knowledge == null} on:click={save}>Save</button>
 				</div>
+
 				{#if $key && $knowledge == null}
 					<div>The right key gives knowledge, but the wrong one takes it. Choose wisely.</div>
 				{/if}
-				{#if $knowledge != null}
+				{#if generated && !$knowledge}
+					<div>Keep this key in a safe place for later access.</div>
+				{/if}
+				{#if !generated && $knowledge != null}
 					<div>That key is rusted, but works.</div>
+				{/if}
+
+				{#if $knowledge != null}
 					<textarea
 						data-testid="knowledge"
 						placeholder="You can write here a piece of knowledge."
