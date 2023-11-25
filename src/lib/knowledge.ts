@@ -14,8 +14,7 @@ let _knowledge: string | null;
 knowledge.subscribe((value) => (_knowledge = value));
 
 export function generate() {
-	// TODO uuid
-	key.set('foo-1234');
+	key.set(crypto.randomUUID());
 	knowledge.set('');
 	save();
 }

@@ -1,6 +1,13 @@
 import { get } from 'svelte/store';
 import { describe, expect, it } from 'vitest';
 import { generate, key, knowledge, load, save } from './knowledge';
+import crypto from 'node:crypto';
+
+Object.defineProperty(globalThis, 'crypto', {
+	value: {
+		randomUUID: () => crypto.randomUUID()
+	}
+});
 
 describe('knowledge', () => {
 	it('should start with no key or knowledge', () => {
