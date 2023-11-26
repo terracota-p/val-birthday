@@ -66,8 +66,12 @@
 						}}
 					/>
 				</div>
+				<div class="tooltip">
+					{getTooltip($key, generated, $knowledge)}
+				</div>
 				<div>
 					<!-- XXX replace disabled with blurred style (and on click show tooltip eg "remove the key before generating a new one") -->
+					<!-- TODO convert to form + action instead of client-side calling generate - https://learn.svelte.dev/tutorial/the-form-element -->
 					<button
 						data-testid="generate"
 						disabled={$knowledge != null}
@@ -79,10 +83,6 @@
 					<!-- XXX replace disabled with blurred style -->
 					<!-- XXX enabled if `unsavedKnowledge` -->
 					<button data-testid="save" disabled={$knowledge == null} on:click={save}>Save</button>
-				</div>
-
-				<div class="tooltip">
-					{getTooltip($key, generated, $knowledge)}
 				</div>
 
 				{#if $knowledge != null}
