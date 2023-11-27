@@ -15,48 +15,48 @@ describe('knowledge', () => {
 		expect(get(knowledge)).toBeNull();
 	});
 
-	it('should generate key with empty knowledge', () => {
-		generate();
+	it('should generate key with empty knowledge', async () => {
+		await generate();
 
 		expect(get(key)).not.empty;
 		expect(get(knowledge)).toEqual('');
 	});
 
-	it('should retrieve knowledge by key', () => {
+	it('should retrieve knowledge by key', async () => {
 		generate();
 		const axiom = 'I think, therefore I exist';
 		knowledge.set(axiom);
-		save();
+		await save();
 
-		load();
+		await load();
 
 		expect(get(key)).not.empty;
 		expect(get(knowledge)).toEqual(axiom);
 	});
 
-	it('should not retrieve knowledge with invalid key', () => {
-		generate();
+	it('should not retrieve knowledge with invalid key', async () => {
+		await generate();
 		const axiom = 'I think, therefore I exist';
 		knowledge.set(axiom);
-		save();
+		await save();
 
 		key.set('invalid-key');
-		load();
+		await load();
 
 		expect(get(knowledge)).toBeNull();
 	});
 
-	it('should update saved knowledge', () => {
-		generate();
+	it('should update saved knowledge', async () => {
+		await generate();
 		const axiom = 'I think, therefore I exist';
 		knowledge.set(axiom);
-		save();
+		await save();
 
 		const updatedAxiom = axiom + "... I'm alive.";
 		knowledge.set(updatedAxiom);
-		save();
+		await save();
 
-		load();
+		await load();
 		expect(get(key)).not.empty;
 		expect(get(knowledge)).toEqual(updatedAxiom);
 	});
