@@ -80,20 +80,24 @@
 							generate();
 						}}>Generate</button
 					>
-					<!-- XXX replace disabled with blurred style -->
-					<!-- XXX enabled if `unsavedKnowledge` -->
-					<button data-testid="save" disabled={$knowledge == null} on:click={save}>Save</button>
 				</div>
+			</div>
 
-				{#if $knowledge != null}
+			{#if $knowledge != null}
+				<div class="vertical section">
 					<textarea
 						data-testid="knowledge"
 						placeholder="You can write here a piece of knowledge."
 						rows="10"
 						bind:value={$knowledge}
 					/>
-				{/if}
-			</div>
+					<!-- XXX replace disabled with blurred style -->
+					<!-- XXX enabled if `unsavedKnowledge` -->
+					<div>
+						<button data-testid="save" disabled={$knowledge == null} on:click={save}>Save</button>
+					</div>
+				</div>
+			{/if}
 		{/if}
 	</main>
 
