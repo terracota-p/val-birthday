@@ -8,10 +8,6 @@ const kv = createClient({
 	token: KV_REST_API_TOKEN
 });
 
-// TODO temp
-console.log('NODE_ENV =', process.env.NODE_ENV);
-console.log('KV_REST_API_URL =', KV_REST_API_URL);
-
 /** @type {import('./$types').PageLoad} */
 export async function load() {
 	const user = await kv.hgetall('user:me');

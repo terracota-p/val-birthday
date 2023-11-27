@@ -1,5 +1,5 @@
 import { writable, type Writable } from 'svelte/store';
-import repository from './repository';
+import * as repository from './repository-api';
 
 export const key: Writable<string | null> = writable(null);
 

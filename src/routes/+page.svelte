@@ -15,7 +15,6 @@
 	let generated = false;
 
 	function getTooltip($key: string | null, generated: boolean, $knowledge: string | null) {
-		console.log('getTooltip');
 		if ($key && $knowledge == null) {
 			return 'The right key gives knowledge, but the wrong one takes it. Choose wisely.';
 		}
