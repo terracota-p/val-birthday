@@ -7,10 +7,6 @@ const kv = createClient({
 	token: KV_REST_API_TOKEN
 });
 
-// TODO temp
-console.log('NODE_ENV =', process.env.NODE_ENV);
-console.log('KV_REST_API_URL =', KV_REST_API_URL);
-
 export async function set(key: string, knowledge: string | null): Promise<void> {
 	await kv.set(key, knowledge);
 }

@@ -1,5 +1,5 @@
 import { get } from 'svelte/store';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { generate, key, knowledge, load, save } from './knowledge';
 import crypto from 'node:crypto';
 
@@ -9,7 +9,21 @@ Object.defineProperty(globalThis, 'crypto', {
 	}
 });
 
+// when using TypeScript
+
+vi.mock('./repository-api', () => {
+	const repo: { [key: string]: string | null } = {};
+	return {
+		get: (k: string) => repo[k],
+		set: (k: string, v: string) => (repo[k] = v)
+	};
+});
+
 describe('knowledge', () => {
+	afterEach(() => {
+		vi.clearAllMocks();
+	});
+
 	it('should start with no key or knowledge', () => {
 		expect(get(key)).toBeNull();
 		expect(get(knowledge)).toBeNull();
