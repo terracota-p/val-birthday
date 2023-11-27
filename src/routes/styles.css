@@ -1,6 +1,13 @@
+:root {
+	--main-bg-color: black;
+	--main-fg-color: white;
+	--border-color: #ccc;
+	--shadow-color: #999;
+}
+
 body {
-	background-color: black;
-	color: white;
+	background-color: var(--main-bg-color);
+	color: var(--main-fg-color);
 }
 
 .app {
@@ -45,8 +52,8 @@ div {
 
 button {
 	text-align: center;
-	background-color: black;
-	color: white;
+	background-color: var(--main-bg-color);
+	color: var(--main-fg-color);
 	height: 2rem;
 	width: 8rem;
 }
@@ -63,31 +70,30 @@ button.big {
 }
 
 button:hover {
-	background-color: white;
-	color: black;
+	background-color: var(--main-fg-color);
+	color: var(--main-bg-color);
 }
 
 button:disabled {
-	background-color: #999;
+	background-color: var(--shadow-color);
 }
 
 *:focus {
-	outline: 2px solid #ccc;
+	outline: 2px solid var(--border-color);
 }
 
 input {
 	text-align: center;
-	background-color: black;
-	color: white;
+	background-color: var(--main-bg-color);
+	color: var(--main-fg-color);
 }
 
 textarea {
-	background-color: black;
-	color: white;
+	background-color: var(--main-bg-color);
+	color: var(--main-fg-color);
 	border-radius: 5px;
-	/* XXX var colors */
-	border: 1px solid #ccc;
-	box-shadow: 1px 1px 1px #999;
+	border: 1px solid var(--border-color);
+	box-shadow: 1px 1px 1px var(--shadow-color);
 }
 
 .tooltip {

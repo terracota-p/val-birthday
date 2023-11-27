@@ -3,12 +3,9 @@
 	import { generate, key, knowledge, load, save } from '../lib/knowledge';
 	import './styles.css';
 
-	export let data;
-
 	let celebrated = false;
 	function celebrate() {
-		// XXX temp disabled
-		// new Audio('./stephen-hawking-happy-birthday-valeria.mp3').play();
+		new Audio('./stephen-hawking-happy-birthday-valeria.mp3').play();
 		celebrated = true;
 	}
 
@@ -31,10 +28,6 @@
 <div class="app">
 	<header><h1>Val's Birthday</h1></header>
 
-	<div>
-		{data?.user}
-	</div>
-
 	<main>
 		<div class="vertical section">
 			<div>Val is {getAge()} years old</div>
@@ -50,7 +43,6 @@
 				</div>
 				<div>
 					<!-- svelte-ignore a11y-autofocus -->
-					<!-- XXX convert to non-editable (don't allow changing key, eg show tooltip) if `unsavedKnowledge` -->
 					<input
 						data-testid="key"
 						id="key"
@@ -69,8 +61,6 @@
 					{getTooltip($key, generated, $knowledge)}
 				</div>
 				<div>
-					<!-- XXX replace disabled with blurred style (and on click show tooltip eg "remove the key before generating a new one") -->
-					<!-- TODO convert to form + action instead of client-side calling generate - https://learn.svelte.dev/tutorial/the-form-element -->
 					<button
 						data-testid="generate"
 						disabled={$knowledge != null}
@@ -90,8 +80,6 @@
 						rows="10"
 						bind:value={$knowledge}
 					/>
-					<!-- XXX replace disabled with blurred style -->
-					<!-- XXX enabled if `unsavedKnowledge` -->
 					<div>
 						<button data-testid="save" disabled={$knowledge == null} on:click={save}>Save</button>
 					</div>
