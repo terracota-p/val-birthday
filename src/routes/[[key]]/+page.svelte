@@ -85,8 +85,8 @@
 			</div>
 
 			{#if data.knowledge != null}
-				<div class="vertical section">
-					<form method="post" action="?/save">
+				<form method="post" action="?/save">
+					<div class="vertical section">
 						<textarea
 							data-testid="knowledge"
 							name="knowledge"
@@ -98,8 +98,8 @@
 						<div>
 							<button data-testid="save" disabled={data.knowledge == null}>Save</button>
 						</div>
-					</form>
-				</div>
+					</div>
+				</form>
 			{/if}
 		{/if}
 	</main>
