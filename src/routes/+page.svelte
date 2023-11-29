@@ -2,12 +2,8 @@
 	import { getAge } from '$lib/age';
 	import { generate, key, knowledge, load, save } from '../lib/knowledge';
 	import './styles.css';
-
-	let celebrated = false;
-	function celebrate() {
-		new Audio('./stephen-hawking-happy-birthday-valeria.mp3').play();
-		celebrated = true;
-	}
+	import { page } from '$app/stores';
+	import { browser } from '$app/environment';
 
 	let generated = false;
 
@@ -23,6 +19,11 @@
 		}
 		return '';
 	}
+
+	const celebrated = $page.url.searchParams.get('celebrated');
+	if (celebrated && browser) {
+		new Audio('./stephen-hawking-happy-birthday-valeria.mp3').play();
+	}
 </script>
 
 <div class="app">
@@ -32,7 +33,11 @@
 		<div class="vertical section">
 			<div>Val is {getAge()} years old</div>
 			<div>
-				<button data-testid="celebrate" class="big" on:click={celebrate}>Let's celebrate!</button>
+				<form method="get" name="celebrate" data-sveltekit-reload>
+					<button data-testid="celebrate" name="celebrated" value="true" class="big"
+						>Let's celebrate!</button
+					>
+				</form>
 			</div>
 		</div>
 
