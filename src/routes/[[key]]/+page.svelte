@@ -46,7 +46,7 @@
 		<div class="vertical section">
 			<div>Val is {getAge()} years old</div>
 			<div>
-				<form method="get" name="celebrate">
+				<form method="get" name="celebrate" data-sveltekit-keepfocus>
 					<button data-testid="celebrate" name="celebrated" value="true" class="big" on:click={sing}
 						>Let's celebrate!</button
 					>
@@ -56,24 +56,22 @@
 
 		{#if data.celebrated || $key}
 			<div class="vertical section">
-				<form method="post" action="?/key">
+				<form method="post" action="?/key" data-sveltekit-keepfocus>
 					<div>
 						<label for="key">Generate or access a piece of knowledge:</label>
 					</div>
 					<div>
-						<!-- svelte-ignore a11y-autofocus -->
 						<input
 							data-testid="key"
 							name="key"
 							type="text"
 							placeholder="use a key or generate a new one"
 							style="width: 32em;"
-							autofocus
 							bind:value={$key}
 							on:input={async () => {
 								generated.set(false);
 								knowledge.set(await load($key));
-								goto(`/${$key}`);
+								goto(`/${$key}`, { keepFocus: true });
 							}}
 						/>
 						<input type="submit" hidden />
@@ -83,7 +81,7 @@
 					{getTooltip($key, $generated, $knowledge)}
 				</div>
 				<div>
-					<form method="post" action="?/generate">
+					<form method="post" action="?/generate" data-sveltekit-keepfocus>
 						<button data-testid="generate" name="generate" disabled={$knowledge != null}
 							>Generate</button
 						>
@@ -92,7 +90,7 @@
 			</div>
 
 			{#if $knowledge != null}
-				<form method="post" action="?/save">
+				<form method="post" action="?/save" data-sveltekit-keepfocus>
 					<div class="vertical section">
 						<textarea
 							data-testid="knowledge"
