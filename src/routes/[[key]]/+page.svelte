@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { getAge } from '$lib/age';
+	import { writable } from 'svelte/store';
 	import { load } from '../../lib/knowledge';
 	import '../styles.css';
 	import type { PageData } from './$types';
+	import { goto } from '$app/navigation';
 
 	export let data: PageData;
 
@@ -11,6 +13,7 @@
 		generated: boolean,
 		knowledge: string | null | undefined
 	) {
+		console.log('getTooltip', { key, generated, knowledge });
 		if (key && knowledge == null) {
 			return 'The right key gives knowledge, but the wrong one takes it. Choose wisely.';
 		}
@@ -25,6 +28,9 @@
 
 	// TODO temp
 	console.log('data =', data);
+	const key = writable<string | undefined>(data.key);
+	const knowledge = writable<string | null | undefined>(data.knowledge);
+	const generated = writable<boolean>(data.generated);
 
 	function sing() {
 		// TODO temp
@@ -48,7 +54,7 @@
 			</div>
 		</div>
 
-		{#if data.celebrated || data.key}
+		{#if data.celebrated || $key}
 			<div class="vertical section">
 				<form method="post" action="?/key">
 					<div>
@@ -63,28 +69,29 @@
 							placeholder="use a key or generate a new one"
 							style="width: 32em;"
 							autofocus
-							value={data.key}
-							on:input={() => {
-								// TODO if js enabled: load knowledge, set generated = false;
-								// load(data.key);
+							bind:value={$key}
+							on:input={async () => {
+								generated.set(false);
+								knowledge.set(await load($key));
+								goto(`/${$key}`);
 							}}
 						/>
 						<input type="submit" hidden />
 					</div>
 				</form>
 				<div class="tooltip">
-					{getTooltip(data.key, data.generated, data.knowledge)}
+					{getTooltip($key, $generated, $knowledge)}
 				</div>
 				<div>
 					<form method="post" action="?/generate">
-						<button data-testid="generate" name="generate" disabled={data.knowledge != null}
+						<button data-testid="generate" name="generate" disabled={$knowledge != null}
 							>Generate</button
 						>
 					</form>
 				</div>
 			</div>
 
-			{#if data.knowledge != null}
+			{#if $knowledge != null}
 				<form method="post" action="?/save">
 					<div class="vertical section">
 						<textarea
@@ -92,11 +99,12 @@
 							name="knowledge"
 							placeholder="You can write here a piece of knowledge."
 							rows="10"
-							value={data.knowledge}
+							bind:value={$knowledge}
 						/>
-						<input name="key" value={data.key} hidden />
+						<input name="key" value={$key} hidden />
+						<input name="celebrated" value={data.celebrated} hidden />
 						<div>
-							<button data-testid="save" disabled={data.knowledge == null}>Save</button>
+							<button data-testid="save" disabled={$knowledge == null}>Save</button>
 						</div>
 					</div>
 				</form>
