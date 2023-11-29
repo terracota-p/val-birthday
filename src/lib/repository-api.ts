@@ -18,7 +18,6 @@ export async function get(key: string, fetch: typeof global.fetch): Promise<stri
 		return null;
 	}
 	const resBody = await res.json();
-	console.log('resBody =', resBody);
 	if ('knowledge' in resBody && typeof resBody.knowledge === 'string') {
 		return resBody.knowledge;
 	}

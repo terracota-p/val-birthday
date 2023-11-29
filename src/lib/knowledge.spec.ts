@@ -1,7 +1,7 @@
+import crypto from 'node:crypto';
 import { get } from 'svelte/store';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { generate, key, knowledge, load, save } from './knowledge';
-import crypto from 'node:crypto';
+import { generate, load, save } from './knowledge';
 
 Object.defineProperty(globalThis, 'crypto', {
 	value: {
@@ -9,12 +9,10 @@ Object.defineProperty(globalThis, 'crypto', {
 	}
 });
 
-// when using TypeScript
-
+const repo: { [key: string]: string | null } = {};
 vi.mock('./repository-api', () => {
-	const repo: { [key: string]: string | null } = {};
 	return {
-		get: (k: string) => repo[k],
+		get: (k: string) => repo[k] ?? null,
 		set: (k: string, v: string) => (repo[k] = v)
 	};
 });
@@ -24,54 +22,43 @@ describe('knowledge', () => {
 		vi.clearAllMocks();
 	});
 
-	it('should start with no key or knowledge', () => {
-		expect(get(key)).toBeNull();
-		expect(get(knowledge)).toBeNull();
-	});
+	it('should generate and save key', async () => {
+		const key = await generate();
 
-	it('should generate key with empty knowledge', async () => {
-		await generate();
-
-		expect(get(key)).not.empty;
-		expect(get(knowledge)).toEqual('');
+		expect(key).not.empty;
+		expect(repo[key]).toEqual('');
 	});
 
 	it('should retrieve knowledge by key', async () => {
-		generate();
+		const key = await generate();
 		const axiom = 'I think, therefore I exist';
-		knowledge.set(axiom);
-		await save();
+		await save(key, axiom);
 
-		await load();
+		const knowledge = await load(key);
 
-		expect(get(key)).not.empty;
-		expect(get(knowledge)).toEqual(axiom);
+		expect(key).not.empty;
+		expect(knowledge).toEqual(axiom);
 	});
 
 	it('should not retrieve knowledge with invalid key', async () => {
-		await generate();
+		const key = await generate();
 		const axiom = 'I think, therefore I exist';
-		knowledge.set(axiom);
-		await save();
+		await save(key, axiom);
 
-		key.set('invalid-key');
-		await load();
+		const knowledge = await load('invalid-key');
 
-		expect(get(knowledge)).toBeNull();
+		expect(knowledge).toBeNull();
 	});
 
 	it('should update saved knowledge', async () => {
-		await generate();
+		const key = await generate();
 		const axiom = 'I think, therefore I exist';
-		knowledge.set(axiom);
-		await save();
+		await save(key, axiom);
 
 		const updatedAxiom = axiom + "... I'm alive.";
-		knowledge.set(updatedAxiom);
-		await save();
+		await save(key, updatedAxiom);
 
-		await load();
-		expect(get(key)).not.empty;
-		expect(get(knowledge)).toEqual(updatedAxiom);
+		const knowledge = await load(key);
+		expect(knowledge).toEqual(updatedAxiom);
 	});
 });
