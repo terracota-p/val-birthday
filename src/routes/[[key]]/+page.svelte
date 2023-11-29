@@ -65,8 +65,8 @@
 							autofocus
 							value={data.key}
 							on:input={() => {
-								data.generated = false;
-								load(data.key);
+								// TODO if js enabled: load knowledge, set generated = false;
+								// load(data.key);
 							}}
 						/>
 						<input type="submit" hidden />

@@ -22,12 +22,15 @@ export async function load(
 	key: string | null | undefined,
 	fetch?: typeof global.fetch
 ): Promise<string | null> {
+	// TODO temp
+	console.log('load ', key);
 	if (!key) {
 		return null;
 	}
 	return repository.get(key, fetch ?? defaultFetch());
 }
 
+// TODO move to repository-api
 function defaultFetch() {
 	if (browser) {
 		return window.fetch;

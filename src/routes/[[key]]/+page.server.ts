@@ -15,9 +15,6 @@ export async function load({ url, params, fetch }) {
 
 export const actions = {
 	key: async ({ request }) => {
-		// TODO query param?
-		// generated = false;
-		// TODO pass key to load()?
 		const key = (await request.formData()).get('key');
 		throw redirect(303, `/${key}`);
 	},
