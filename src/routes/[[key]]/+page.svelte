@@ -54,7 +54,7 @@
 			</div>
 		</div>
 
-		{#if data.celebrated || $key}
+		{#if data.celebrated || $key != null}
 			<div class="vertical section">
 				<form method="post" action="?/key" data-sveltekit-keepfocus>
 					<div>

@@ -31,6 +31,18 @@ test('should not give knowledge with wrong key', async ({ page }) => {
 	await expect(page.getByTestId('knowledge')).toBeHidden();
 });
 
+test('should not hide key input with empty key', async ({ page }) => {
+	await page.goto('/');
+	await page.getByTestId('celebrate').click();
+	const keyInput = page.getByTestId('key');
+	await keyInput.fill('wrong-key');
+	await expect(keyInput).toBeVisible();
+
+	await keyInput.fill('');
+
+	await expect(keyInput).toBeVisible();
+});
+
 test('should save and retrieve knowledge', async ({ page }) => {
 	await page.goto('/');
 	await page.getByTestId('celebrate').click();
