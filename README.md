@@ -10,6 +10,7 @@ Content:
   - [Run](#run)
   - [Test](#test)
   - [Build](#build)
+  - [Tech](#tech)
 
 ## Install
 
@@ -44,3 +45,9 @@ npm run build
 ```
 
 Preview the production build: `npm run preview`.
+
+## Tech
+
+- web - a tool that supports SSR + progressive enhancement and SPA: [svelte-kit](https://kit.svelte.dev/).
+- DB - a key-value store with a reasonable free tier: [vercel-kv](https://vercel.com/storage/kv).
+- hosting - a cloud service with a reasonable free tier: [vercel](https://vercel.com/).
