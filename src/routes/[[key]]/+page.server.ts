@@ -4,8 +4,6 @@ import * as knowledge from '../../lib/knowledge';
 import type { Actions } from './$types';
 
 export async function load({ url, params, fetch }) {
-	// TODO temp
-	console.log('load');
 	const celebrated = url.searchParams.get('celebrated');
 	const generated = !!url.searchParams.get('generated');
 	const key = params.key;

@@ -13,7 +13,6 @@
 		generated: boolean,
 		knowledge: string | null | undefined
 	) {
-		console.log('getTooltip', { key, generated, knowledge });
 		if (key && knowledge == null) {
 			return 'The right key gives knowledge, but the wrong one takes it. Choose wisely.';
 		}
@@ -26,16 +25,12 @@
 		return '';
 	}
 
-	// TODO temp
-	console.log('data =', data);
 	const key = writable<string | undefined>(data.key);
 	const knowledge = writable<string | null | undefined>(data.knowledge);
 	const generated = writable<boolean>(data.generated);
 
 	function sing() {
-		// TODO temp
-		console.log('sing!');
-		// new Audio('./stephen-hawking-happy-birthday-valeria.mp3').play();
+		new Audio('./stephen-hawking-happy-birthday-valeria.mp3').play();
 	}
 </script>
 
