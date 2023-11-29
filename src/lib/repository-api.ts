@@ -1,4 +1,8 @@
-export async function set(key: string, knowledge: string | null): Promise<void> {
+export async function set(
+	key: string,
+	knowledge: string | null,
+	fetch: typeof global.fetch
+): Promise<void> {
 	await fetch(`/knowledge/${key}`, {
 		method: 'PUT',
 		body: JSON.stringify({ knowledge }),
@@ -8,7 +12,7 @@ export async function set(key: string, knowledge: string | null): Promise<void> 
 	});
 }
 
-export async function get(key: string): Promise<string | null> {
+export async function get(key: string, fetch: typeof global.fetch): Promise<string | null> {
 	const res = await fetch(`/knowledge/${key}`);
 	if (!res.ok) {
 		return null;

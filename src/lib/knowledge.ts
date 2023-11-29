@@ -1,32 +1,36 @@
-import { writable, type Writable } from 'svelte/store';
 import * as repository from './repository-api';
+import { browser } from '$app/environment';
 
-export const key: Writable<string | null> = writable(null);
-
-let _key: string | null = null;
-key.subscribe((value) => (_key = value));
-
-export const knowledge: Writable<string | null> = writable(null);
-let _knowledge: string | null;
-knowledge.subscribe((value) => (_knowledge = value));
-
-export async function generate() {
-	key.set(crypto.randomUUID());
-	knowledge.set('');
-	await save();
+export async function generate(fetch?: typeof global.fetch): Promise<string> {
+	const key = crypto.randomUUID();
+	await save(key, '', fetch);
+	return key;
 }
 
-export async function save() {
-	if (_key == null) {
+export async function save(
+	key: string | null,
+	knowledge: string | null,
+	fetch?: typeof global.fetch
+) {
+	if (key == null) {
 		return;
 	}
-	await repository.set(_key, _knowledge);
+	await repository.set(key, knowledge, fetch ?? defaultFetch());
 }
 
-export async function load() {
-	if (!_key) {
-		knowledge.set(null);
-		return;
+export async function load(
+	key: string | null | undefined,
+	fetch?: typeof global.fetch
+): Promise<string | null> {
+	if (!key) {
+		return null;
 	}
-	knowledge.set((await repository.get(_key)) ?? null);
+	return repository.get(key, fetch ?? defaultFetch());
+}
+
+function defaultFetch() {
+	if (browser) {
+		return window.fetch;
+	}
+	return global.fetch;
 }

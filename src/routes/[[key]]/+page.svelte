@@ -1,31 +1,35 @@
 <script lang="ts">
 	import { getAge } from '$lib/age';
-	import { generate, key, knowledge, load, save } from '../lib/knowledge';
+	import { load } from '../../lib/knowledge';
+	import '../styles.css';
 	import type { PageData } from './$types';
-	import './styles.css';
 
 	export let data: PageData;
-	let generated = false;
 
-	function getTooltip($key: string | null, generated: boolean, $knowledge: string | null) {
-		if ($key && $knowledge == null) {
+	function getTooltip(
+		key: string | null | undefined,
+		generated: boolean,
+		knowledge: string | null | undefined
+	) {
+		if (key && knowledge == null) {
 			return 'The right key gives knowledge, but the wrong one takes it. Choose wisely.';
 		}
-		if (generated && !$knowledge) {
+		if (generated && !knowledge) {
 			return 'Keep this key in a safe place for later access.';
 		}
-		if (!generated && $knowledge != null) {
+		if (!generated && knowledge != null) {
 			return 'That key is rusted, but works.';
 		}
 		return '';
 	}
 
-	console.log('celebrated =', data.celebrated);
+	// TODO temp
+	console.log('data =', data);
 
 	function sing() {
 		// TODO temp
 		console.log('sing!');
-		new Audio('./stephen-hawking-happy-birthday-valeria.mp3').play();
+		// new Audio('./stephen-hawking-happy-birthday-valeria.mp3').play();
 	}
 </script>
 
@@ -44,7 +48,7 @@
 			</div>
 		</div>
 
-		{#if data.celebrated}
+		{#if data.celebrated || data.key}
 			<div class="vertical section">
 				<form method="post" action="?/key">
 					<div>
@@ -59,41 +63,42 @@
 							placeholder="use a key or generate a new one"
 							style="width: 32em;"
 							autofocus
-							bind:value={$key}
+							value={data.key}
 							on:input={() => {
-								generated = false;
-								load();
+								data.generated = false;
+								load(data.key);
 							}}
 						/>
 						<input type="submit" hidden />
 					</div>
 				</form>
 				<div class="tooltip">
-					{getTooltip($key, generated, $knowledge)}
+					{getTooltip(data.key, data.generated, data.knowledge)}
 				</div>
 				<div>
-					<button
-						data-testid="generate"
-						disabled={$knowledge != null}
-						on:click={() => {
-							generated = true;
-							generate();
-						}}>Generate</button
-					>
+					<form method="post" action="?/generate">
+						<button data-testid="generate" name="generate" disabled={data.knowledge != null}
+							>Generate</button
+						>
+					</form>
 				</div>
 			</div>
 
-			{#if $knowledge != null}
+			{#if data.knowledge != null}
 				<div class="vertical section">
-					<textarea
-						data-testid="knowledge"
-						placeholder="You can write here a piece of knowledge."
-						rows="10"
-						bind:value={$knowledge}
-					/>
-					<div>
-						<button data-testid="save" disabled={$knowledge == null} on:click={save}>Save</button>
-					</div>
+					<form method="post" action="?/save">
+						<textarea
+							data-testid="knowledge"
+							name="knowledge"
+							placeholder="You can write here a piece of knowledge."
+							rows="10"
+							value={data.knowledge}
+						/>
+						<input name="key" value={data.key} hidden />
+						<div>
+							<button data-testid="save" disabled={data.knowledge == null}>Save</button>
+						</div>
+					</form>
 				</div>
 			{/if}
 		{/if}
