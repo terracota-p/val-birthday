@@ -10,7 +10,7 @@ test('should celebrate', async ({ page }) => {
 	await expect(page.getByTestId('key')).toBeVisible();
 });
 
-test('should generate key with empty knowledge', async ({ page }) => {
+test('should generate key with non-empty knowledge', async ({ page }) => {
 	await page.goto('/');
 	await page.getByTestId('celebrate').click();
 
@@ -19,7 +19,7 @@ test('should generate key with empty knowledge', async ({ page }) => {
 	await expect(page.getByTestId('key')).not.toBeEmpty();
 	const knowledgeTextarea = page.getByTestId('knowledge');
 	await expect(knowledgeTextarea).toBeVisible();
-	await expect(knowledgeTextarea).toBeEmpty();
+	await expect(knowledgeTextarea).not.toBeEmpty();
 });
 
 test('should not give knowledge with wrong key', async ({ page }) => {
