@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { getAge } from '$lib/age';
 	import { generate, key, knowledge, load, save } from '../lib/knowledge';
+	import type { PageData } from './$types';
 	import './styles.css';
-	import { page } from '$app/stores';
-	import { browser } from '$app/environment';
 
+	export let data: PageData;
 	let generated = false;
 
 	function getTooltip($key: string | null, generated: boolean, $knowledge: string | null) {
@@ -20,8 +20,11 @@
 		return '';
 	}
 
-	const celebrated = $page.url.searchParams.get('celebrated');
-	if (celebrated && browser) {
+	console.log('celebrated =', data.celebrated);
+
+	function sing() {
+		// TODO temp
+		console.log('sing!');
 		new Audio('./stephen-hawking-happy-birthday-valeria.mp3').play();
 	}
 </script>
@@ -33,35 +36,38 @@
 		<div class="vertical section">
 			<div>Val is {getAge()} years old</div>
 			<div>
-				<form method="get" name="celebrate" data-sveltekit-reload>
-					<button data-testid="celebrate" name="celebrated" value="true" class="big"
+				<form method="get" name="celebrate">
+					<button data-testid="celebrate" name="celebrated" value="true" class="big" on:click={sing}
 						>Let's celebrate!</button
 					>
 				</form>
 			</div>
 		</div>
 
-		{#if celebrated}
+		{#if data.celebrated}
 			<div class="vertical section">
-				<div>
-					<label for="key">Generate or access a piece of knowledge:</label>
-				</div>
-				<div>
-					<!-- svelte-ignore a11y-autofocus -->
-					<input
-						data-testid="key"
-						id="key"
-						type="text"
-						placeholder="use a key or generate a new one"
-						style="width: 32em;"
-						autofocus
-						bind:value={$key}
-						on:input={() => {
-							generated = false;
-							load();
-						}}
-					/>
-				</div>
+				<form method="post" action="?/key">
+					<div>
+						<label for="key">Generate or access a piece of knowledge:</label>
+					</div>
+					<div>
+						<!-- svelte-ignore a11y-autofocus -->
+						<input
+							data-testid="key"
+							name="key"
+							type="text"
+							placeholder="use a key or generate a new one"
+							style="width: 32em;"
+							autofocus
+							bind:value={$key}
+							on:input={() => {
+								generated = false;
+								load();
+							}}
+						/>
+						<input type="submit" hidden />
+					</div>
+				</form>
 				<div class="tooltip">
 					{getTooltip($key, generated, $knowledge)}
 				</div>
