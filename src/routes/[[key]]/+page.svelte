@@ -66,7 +66,7 @@
 							name="key"
 							type="text"
 							placeholder="use a key or generate a new one"
-							style="width: 32em;"
+							class="big"
 							bind:value={$key}
 							on:input={async () => {
 								generated.set(false);
