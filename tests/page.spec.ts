@@ -15,8 +15,9 @@ test('should generate key with empty knowledge', async ({ page }) => {
 	await page.getByTestId('generate').click();
 
 	await expect(page.getByTestId('key')).not.toBeEmpty();
-	await expect(page.getByTestId('knowledge')).toBeVisible();
-	await expect(page.getByTestId('knowledge')).toBeEmpty();
+	const knowledgeTextarea = page.getByTestId('knowledge');
+	await expect(knowledgeTextarea).toBeVisible();
+	await expect(knowledgeTextarea).toBeEmpty();
 });
 
 test('should not give knowledge with wrong key', async ({ page }) => {
@@ -24,7 +25,8 @@ test('should not give knowledge with wrong key', async ({ page }) => {
 	await page.getByTestId('celebrate').click();
 	await page.getByTestId('generate').click();
 
-	await page.getByTestId('key').fill('wrong-key');
+	const keyInput = page.getByTestId('key');
+	await keyInput.fill('wrong-key');
 
 	await expect(page.getByTestId('knowledge')).toBeHidden();
 });
@@ -34,15 +36,17 @@ test('should save and retrieve knowledge', async ({ page }) => {
 	await page.getByTestId('celebrate').click();
 	await page.getByTestId('generate').click();
 
-	const generatedKey = await page.getByTestId('key').inputValue();
+	const keyInput = page.getByTestId('key');
+	const generatedKey = await keyInput.inputValue();
 	const knowledge = 'All my knowledge';
-	await page.getByTestId('knowledge').fill(knowledge);
+	const knowledgeTextarea = page.getByTestId('knowledge');
+	await knowledgeTextarea.fill(knowledge);
 	await page.getByTestId('save').click();
 
-	await page.getByTestId('key').fill('wrong-key');
-	await expect(page.getByTestId('knowledge')).toBeHidden();
+	await keyInput.fill('wrong-key');
+	await expect(knowledgeTextarea).toBeHidden();
 
-	await page.getByTestId('key').fill(generatedKey);
-	await expect(page.getByTestId('knowledge')).toBeVisible();
-	await expect(page.getByTestId('knowledge')).toHaveValue(knowledge);
+	await keyInput.fill(generatedKey);
+	await expect(knowledgeTextarea).toBeVisible();
+	await expect(knowledgeTextarea).toHaveValue(knowledge);
 });
