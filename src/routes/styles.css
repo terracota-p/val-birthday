@@ -55,8 +55,12 @@ div {
 	flex-direction: column;
 }
 
-.section {
+.section:not(:last-child) {
 	margin: 0 0 2em 0;
+}
+
+.section {
+	margin: 0 0 0 0;
 }
 
 .content {
