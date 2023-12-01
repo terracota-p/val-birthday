@@ -1,12 +1,12 @@
 import { redirect } from '@sveltejs/kit';
 import 'dotenv/config';
-import knowledge from '../../lib/knowledge';
+import knowledge from '../lib/knowledge';
 import type { Actions } from './$types';
 
-export async function load({ url, params, fetch }) {
+export async function load({ url, fetch }) {
 	const celebrated = url.searchParams.get('celebrated');
-	const generated = !!url.searchParams.get('generated');
-	const key = params.key;
+	const generated = url.searchParams.get('generated') != null;
+	const key = url.searchParams.get('key');
 
 	const loadedKnowledge = key && (await knowledge(fetch).load(key));
 
@@ -14,17 +14,12 @@ export async function load({ url, params, fetch }) {
 }
 
 export const actions = {
-	key: async ({ request }) => {
-		const key = (await request.formData()).get('key');
-		throw redirect(303, `/${key}`);
-	},
-
 	generate: async ({ fetch }) => {
 		const key = knowledge(fetch).generate();
 		const fact = await getQuote(fetch);
 		await knowledge(fetch).save(key, mapFactToText(fact));
 
-		throw redirect(303, `/${key}?generated`);
+		throw redirect(303, `?key=${key}&generated`);
 	},
 
 	save: async ({ request, fetch }) => {
@@ -32,6 +27,8 @@ export const actions = {
 		const k = form.get('key');
 		const v = form.get('knowledge');
 		await knowledge(fetch).save(k ? '' + k : null, v ? v + '' : null);
+
+		throw redirect(303, `?key=${k}`);
 	}
 } satisfies Actions;
 

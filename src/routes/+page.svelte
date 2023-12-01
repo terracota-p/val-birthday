@@ -1,10 +1,10 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { getAge } from '$lib/age';
 	import { writable } from 'svelte/store';
-	import knowledgeMod from '../../lib/knowledge';
-	import '../styles.css';
+	import knowledgeMod from '../lib/knowledge';
 	import type { PageData } from './$types';
-	import { goto } from '$app/navigation';
+	import './styles.css';
 
 	const { load } = knowledgeMod();
 
@@ -18,16 +18,16 @@
 		if (key && knowledge == null) {
 			return 'The right key gives knowledge, but the wrong one takes it. Choose wisely.';
 		}
-		if (generated && !knowledge) {
+		if (generated) {
 			return 'Keep this key in a safe place for later access.';
 		}
-		if (!generated && knowledge != null) {
+		if (key && knowledge != null) {
 			return 'That key is rusted, but works.';
 		}
 		return '';
 	}
 
-	const key = writable<string | undefined>(data.key);
+	const key = writable<string | null>(data.key);
 	const knowledge = writable<string | null | undefined>(data.knowledge);
 	const generated = writable<boolean>(data.generated);
 
@@ -53,8 +53,7 @@
 
 		{#if data.celebrated || $key != null}
 			<div class="vertical section">
-				<!-- TODO get -->
-				<form method="post" action="?/key">
+				<form method="get" name="key" data-sveltekit-keepfocus>
 					<div>
 						<label for="key">Generate or access a piece of knowledge:</label>
 					</div>
@@ -69,7 +68,7 @@
 							on:input={async () => {
 								generated.set(false);
 								knowledge.set(await load($key));
-								goto(`/${$key}`, { keepFocus: true });
+								goto(`/?key=${$key}`, { keepFocus: true });
 							}}
 						/>
 						<input type="submit" hidden />
