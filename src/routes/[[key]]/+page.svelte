@@ -41,7 +41,7 @@
 		<div class="vertical section">
 			<div>Val is {getAge()} years old</div>
 			<div>
-				<form method="get" name="celebrate" data-sveltekit-keepfocus>
+				<form method="get" name="celebrate" class="big" data-sveltekit-keepfocus>
 					<button data-testid="celebrate" name="celebrated" value="true" class="big" on:click={sing}
 						>Let's celebrate!</button
 					>
