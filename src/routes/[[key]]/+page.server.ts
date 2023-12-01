@@ -8,7 +8,7 @@ export async function load({ url, params, fetch }) {
 	const generated = !!url.searchParams.get('generated');
 	const key = params.key;
 
-	const loadedKnowledge = key && (await knowledge(fetch).load(key, fetch));
+	const loadedKnowledge = key && (await knowledge(fetch).load(key));
 
 	return { celebrated, key, generated, knowledge: loadedKnowledge };
 }
