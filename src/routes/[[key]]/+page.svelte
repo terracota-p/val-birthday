@@ -53,7 +53,8 @@
 
 		{#if data.celebrated || $key != null}
 			<div class="vertical section">
-				<form method="post" action="?/key" data-sveltekit-keepfocus>
+				<!-- TODO get -->
+				<form method="post" action="?/key">
 					<div>
 						<label for="key">Generate or access a piece of knowledge:</label>
 					</div>
@@ -78,7 +79,7 @@
 					{getTooltip($key, $generated, $knowledge)}
 				</div>
 				<div>
-					<form method="post" action="?/generate" data-sveltekit-keepfocus>
+					<form method="post" action="?/generate">
 						<button data-testid="generate" name="generate" disabled={$knowledge != null}
 							>Generate</button
 						>
@@ -88,12 +89,7 @@
 
 			{#if $knowledge != null}
 				<div class="vertical section content">
-					<form
-						method="post"
-						action="?/save"
-						class="vertical section content"
-						data-sveltekit-keepfocus
-					>
+					<form method="post" action="?/save" class="vertical section content">
 						<textarea
 							class="vertical section content"
 							data-testid="knowledge"
