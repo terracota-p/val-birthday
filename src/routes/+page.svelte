@@ -5,6 +5,7 @@
 	import knowledgeMod from '../lib/knowledge';
 	import type { PageData } from './$types';
 	import './styles.css';
+	import { enhance } from '$app/forms';
 
 	const { load } = knowledgeMod();
 
@@ -88,7 +89,7 @@
 
 			{#if $knowledge != null}
 				<div class="vertical section content">
-					<form method="post" action="?/save" class="vertical section content">
+					<form method="post" action="?/save" class="vertical section content" use:enhance>
 						<textarea
 							class="vertical section content"
 							data-testid="knowledge"
