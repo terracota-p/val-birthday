@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { getAge } from '$lib/age';
 	import { writable } from 'svelte/store';
-	import { load } from '../../lib/knowledge';
+	import knowledgeMod from '../../lib/knowledge';
 	import '../styles.css';
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
+
+	const { load } = knowledgeMod();
 
 	export let data: PageData;
 

@@ -1,6 +1,8 @@
 import crypto from 'node:crypto';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { generate, load, save } from './knowledge';
+import knowledge from './knowledge';
+
+const { generate, load, save } = knowledge();
 
 Object.defineProperty(globalThis, 'crypto', {
 	value: {

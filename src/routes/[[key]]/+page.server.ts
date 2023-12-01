@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import 'dotenv/config';
-import * as knowledge from '../../lib/knowledge';
+import knowledge from '../../lib/knowledge';
 import type { Actions } from './$types';
 
 export async function load({ url, params, fetch }) {
@@ -8,7 +8,7 @@ export async function load({ url, params, fetch }) {
 	const generated = !!url.searchParams.get('generated');
 	const key = params.key;
 
-	const loadedKnowledge = key && (await knowledge.load(key, fetch));
+	const loadedKnowledge = key && (await knowledge(fetch).load(key, fetch));
 
 	return { celebrated, key, generated, knowledge: loadedKnowledge };
 }
@@ -20,9 +20,9 @@ export const actions = {
 	},
 
 	generate: async ({ fetch }) => {
-		const key = knowledge.generate();
+		const key = knowledge(fetch).generate();
 		const fact = await getQuote(fetch);
-		await knowledge.save(key, mapFactToText(fact), fetch);
+		await knowledge(fetch).save(key, mapFactToText(fact));
 
 		throw redirect(303, `/${key}?generated`);
 	},
@@ -31,7 +31,7 @@ export const actions = {
 		const form = await request.formData();
 		const k = form.get('key');
 		const v = form.get('knowledge');
-		await knowledge.save(k ? '' + k : null, v ? v + '' : null, fetch);
+		await knowledge(fetch).save(k ? '' + k : null, v ? v + '' : null);
 	}
 } satisfies Actions;
 

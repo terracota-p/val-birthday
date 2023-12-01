@@ -1,37 +1,39 @@
 import * as repository from './repository-api';
 import { browser } from '$app/environment';
 
-// TODO pass fetch (or repositoryApi) in default export function param
-
-export function generate(): string {
-	return crypto.randomUUID();
-}
-
-export async function save(
-	key: string | null,
-	knowledge: string | null,
-	fetch?: typeof global.fetch
-) {
-	if (key == null) {
-		return;
+export default (fetch?: typeof global.fetch) => {
+	function generate(): string {
+		return crypto.randomUUID();
 	}
-	await repository.set(key, knowledge, fetch ?? defaultFetch());
-}
 
-export async function load(
-	key: string | null | undefined,
-	fetch?: typeof global.fetch
-): Promise<string | null> {
-	if (!key) {
-		return null;
+	async function save(key: string | null, knowledge: string | null) {
+		if (key == null) {
+			return;
+		}
+		await repository.set(key, knowledge, fetch ?? defaultFetch());
 	}
-	return repository.get(key, fetch ?? defaultFetch());
-}
 
-// TODO move to repository-api
-function defaultFetch() {
-	if (browser) {
-		return window.fetch;
+	async function load(
+		key: string | null | undefined,
+		fetch?: typeof global.fetch
+	): Promise<string | null> {
+		if (!key) {
+			return null;
+		}
+		return repository.get(key, fetch ?? defaultFetch());
 	}
-	return global.fetch;
-}
+
+	// TODO move to repository-api
+	function defaultFetch() {
+		if (browser) {
+			return window.fetch;
+		}
+		return global.fetch;
+	}
+
+	return {
+		generate,
+		load,
+		save
+	};
+};
