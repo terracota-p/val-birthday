@@ -15,12 +15,21 @@ Content:
 ## Install
 
 ```sh
-npm i
+npm install
 ```
 
 ### One-time setup
 
-Set up [vercel kv](https://vercel.com/storage/kv), you should end up with a file like `.env.development.local` (similar to `.env-sample`). Rename it to `.env` (to work around some issue with the no-config kv setup).
+Set up [vercel kv](https://vercel.com/docs/storage/vercel-kv/quickstart), eg:
+
+```sh
+vercel link
+vercel env pull .env.development.local
+# rename to work around some issue with the no-config kv setup
+mv .env.development.local .env
+```
+
+You should end up with an `.env` file (similar to `.env-sample`).
 
 ## Run
 
