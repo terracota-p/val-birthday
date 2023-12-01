@@ -7,6 +7,8 @@ Content:
 - [val-birthday](#val-birthday)
   - [Install](#install)
     - [One-time setup](#one-time-setup)
+      - [DB](#db)
+      - [Quotes API key](#quotes-api-key)
   - [Run](#run)
   - [Test](#test)
   - [Build](#build)
@@ -20,6 +22,10 @@ npm install
 
 ### One-time setup
 
+You should end up with an `.env` file (similar to `.env-sample`):
+
+#### DB
+
 Set up [vercel kv](https://vercel.com/docs/storage/vercel-kv/quickstart), eg:
 
 ```sh
@@ -29,7 +35,13 @@ vercel env pull .env.development.local
 mv .env.development.local .env
 ```
 
-You should end up with an `.env` file (similar to `.env-sample`).
+#### Quotes API key
+
+Optionally sign up to [api-ninjas](https://api-ninjas.com/) and set API key in .env to get quotes when generating knowledge:
+
+```env
+API_NINJAS_KEY="<your-api-key>"
+```
 
 ## Run
 

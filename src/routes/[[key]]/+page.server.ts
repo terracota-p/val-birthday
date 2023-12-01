@@ -22,18 +22,8 @@ export const actions = {
 	generate: async ({ fetch }) => {
 		// TODO generate should not save
 		const key = await knowledge.generate(fetch);
-
-		try {
-			const res = await fetch('https://api.api-ninjas.com/v1/quotes?category=' + rndTopic(), {
-				headers: { 'X-Api-Key': 'LGeBfaq0hvqDB3LzuKXdnw==0UZVPVaJsdxuKiiD' }
-			});
-			if (res.ok) {
-				const fact = (await res.json())?.[0];
-				await knowledge.save(key, mapFactToText(fact), fetch);
-			}
-		} catch (error) {
-			console.warn('Error fetching fact, continuing', error);
-		}
+		const fact = await getQuote(fetch);
+		await knowledge.save(key, mapFactToText(fact), fetch);
 
 		throw redirect(303, `/${key}?generated`);
 	},
@@ -46,13 +36,42 @@ export const actions = {
 	}
 } satisfies Actions;
 
+async function getQuote(fetch: typeof global.fetch): Promise<Fact | undefined> {
+	try {
+		const res = await fetch('https://api.api-ninjas.com/v1/quotes?category=' + rndTopic(), {
+			headers: { 'X-Api-Key': API_NINJAS_KEY }
+		});
+		if (res.ok) {
+			return (await res.json())?.[0];
+		}
+		console.warn('Error fetching fact, continuing', await res.text());
+	} catch (error) {
+		console.warn('Error fetching fact, continuing', error);
+	}
+}
+
 const rndTopic = () => topics[Math.floor(Math.random() * topics.length)];
 
 // ref - https://api-ninjas.com/api/quotes
 const topics = ['art', 'history', 'knowledge'];
 
-function mapFactToText({ quote, author }: { quote: string; author: string }) {
+type Fact = {
+	quote: string;
+	author: string;
+};
+
+function mapFactToText(fact?: Fact): string {
+	if (!fact) {
+		return '';
+	}
+
+	const { quote, author } = fact;
 	return `${quote}
   
   --${author}`;
+}
+
+const { API_NINJAS_KEY = '' } = process.env;
+if (!API_NINJAS_KEY) {
+	console.warn('No API_NINJAS_KEY env var set, will not get quotes on generate');
 }
