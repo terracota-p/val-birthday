@@ -1,5 +1,4 @@
 import crypto from 'node:crypto';
-import { get } from 'svelte/store';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { generate, load, save } from './knowledge';
 
@@ -22,15 +21,20 @@ describe('knowledge', () => {
 		vi.clearAllMocks();
 	});
 
-	it('should generate and save key', async () => {
-		const key = await generate();
+	it('should generate key', () => {
+		const key = generate();
 
 		expect(key).not.empty;
-		expect(repo[key]).toEqual('');
+	});
+
+	it('should not retrieve knowledge', async () => {
+		const knowledge = await load('foo');
+
+		expect(knowledge).toBeNull();
 	});
 
 	it('should retrieve knowledge by key', async () => {
-		const key = await generate();
+		const key = generate();
 		const axiom = 'I think, therefore I exist';
 		await save(key, axiom);
 
@@ -41,7 +45,7 @@ describe('knowledge', () => {
 	});
 
 	it('should not retrieve knowledge with invalid key', async () => {
-		const key = await generate();
+		const key = generate();
 		const axiom = 'I think, therefore I exist';
 		await save(key, axiom);
 
@@ -51,7 +55,7 @@ describe('knowledge', () => {
 	});
 
 	it('should update saved knowledge', async () => {
-		const key = await generate();
+		const key = generate();
 		const axiom = 'I think, therefore I exist';
 		await save(key, axiom);
 

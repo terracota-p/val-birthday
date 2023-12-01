@@ -3,10 +3,8 @@ import { browser } from '$app/environment';
 
 // TODO pass fetch (or repositoryApi) in default export function param
 
-export async function generate(fetch?: typeof global.fetch): Promise<string> {
-	const key = crypto.randomUUID();
-	await save(key, '', fetch);
-	return key;
+export function generate(): string {
+	return crypto.randomUUID();
 }
 
 export async function save(

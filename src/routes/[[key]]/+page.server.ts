@@ -20,8 +20,7 @@ export const actions = {
 	},
 
 	generate: async ({ fetch }) => {
-		// TODO generate should not save
-		const key = await knowledge.generate(fetch);
+		const key = knowledge.generate();
 		const fact = await getQuote(fetch);
 		await knowledge.save(key, mapFactToText(fact), fetch);
 
