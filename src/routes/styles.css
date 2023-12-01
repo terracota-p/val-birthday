@@ -59,6 +59,11 @@ div {
 	margin: 0 0 2em 0;
 }
 
+.content {
+	/* fill remaining screen space - ref https://stackoverflow.com/a/24979148/9194203 */
+	flex: 1 1 auto;
+}
+
 button {
 	text-align: center;
 	background-color: var(--main-bg-color);
@@ -101,6 +106,7 @@ input {
 }
 
 textarea {
+	height: 100%;
 	background-color: var(--main-bg-color);
 	color: var(--main-fg-color);
 	border-radius: 5px;

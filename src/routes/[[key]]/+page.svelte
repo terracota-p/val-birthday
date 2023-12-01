@@ -85,13 +85,18 @@
 			</div>
 
 			{#if $knowledge != null}
-				<form method="post" action="?/save" data-sveltekit-keepfocus>
-					<div class="vertical section">
+				<div class="vertical section content">
+					<form
+						method="post"
+						action="?/save"
+						class="vertical section content"
+						data-sveltekit-keepfocus
+					>
 						<textarea
+							class="vertical section content"
 							data-testid="knowledge"
 							name="knowledge"
 							placeholder="You can write here a piece of knowledge."
-							rows="10"
 							bind:value={$knowledge}
 						/>
 						<input name="key" value={$key} hidden />
@@ -99,8 +104,8 @@
 						<div>
 							<button data-testid="save" disabled={$knowledge == null}>Save</button>
 						</div>
-					</div>
-				</form>
+					</form>
+				</div>
 			{/if}
 		{/if}
 	</main>
