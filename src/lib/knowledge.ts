@@ -1,7 +1,8 @@
-import * as repository from './repository-api';
-import { browser } from '$app/environment';
+import repositoryMod from './repository-api';
 
 export default (fetch?: typeof global.fetch) => {
+	const repository = repositoryMod(fetch);
+
 	function generate(): string {
 		return crypto.randomUUID();
 	}
@@ -10,25 +11,14 @@ export default (fetch?: typeof global.fetch) => {
 		if (key == null) {
 			return;
 		}
-		await repository.set(key, knowledge, fetch ?? defaultFetch());
+		await repository.set(key, knowledge);
 	}
 
-	async function load(
-		key: string | null | undefined,
-		fetch?: typeof global.fetch
-	): Promise<string | null> {
+	async function load(key: string | null | undefined): Promise<string | null> {
 		if (!key) {
 			return null;
 		}
-		return repository.get(key, fetch ?? defaultFetch());
-	}
-
-	// TODO move to repository-api
-	function defaultFetch() {
-		if (browser) {
-			return window.fetch;
-		}
-		return global.fetch;
+		return repository.get(key);
 	}
 
 	return {

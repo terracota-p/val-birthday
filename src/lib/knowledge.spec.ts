@@ -13,8 +13,10 @@ Object.defineProperty(globalThis, 'crypto', {
 const repo: { [key: string]: string | null } = {};
 vi.mock('./repository-api', () => {
 	return {
-		get: (k: string) => repo[k] ?? null,
-		set: (k: string, v: string) => (repo[k] = v)
+		default: () => ({
+			get: (k: string) => repo[k] ?? null,
+			set: (k: string, v: string) => (repo[k] = v)
+		})
 	};
 });
 
