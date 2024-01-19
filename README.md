@@ -13,6 +13,7 @@ Content:
   - [Test](#test)
   - [Build](#build)
   - [Tech](#tech)
+    - [Options considered](#options-considered)
 
 ## Install
 
@@ -72,3 +73,35 @@ Preview the production build: `npm run preview`.
 - web - a tool that supports SSR + progressive enhancement and SPA: [svelte-kit](https://kit.svelte.dev/).
 - DB - a key-value store with a reasonable free tier: [vercel-kv](https://vercel.com/storage/kv).
 - hosting - a cloud service with a reasonable free tier: [vercel](https://vercel.com/).
+
+### Options considered
+
+- lang:
+  - ts
+  - alternatives:
+    - rust
+      - <https://kerkour.com/rust-functional-programming>
+      - <https://www.rust-lang.org/learn/get-started>
+- web:
+  - svelte
+    - sveltekit
+  - alternatives:
+    - solidjs
+      - with Astro as Static-Site Generation (SSG)?
+    - vue
+      - options - ref <https://vuejs.org/guide/extras/ways-of-using-vue.html>:
+        - ? Standalone Script - <https://github.com/vuejs/petite-vue>
+        - ? Fullstack / SSR - <https://nuxt.com/>
+    - feathers
+    - <https://www.phoenixframework.org/>
+    - <https://nextjs.org/>
+      - on top of react
+  - doc
+    - <https://survey.stackoverflow.co/2023/#section-admired-and-desired-web-frameworks-and-technologies>
+    - <https://2022.stateofjs.com/en-US/libraries/front-end-frameworks/>
+- hosting:
+  - vercel free - <https://vercel.com/templates/svelte/sveltekit-boilerplate>
+- DB:
+  - <https://vercel.com/storage/kv>
+    - <https://vercel.com/docs/storage/vercel-kv/quickstart>
+    - <https://vercel.com/templates/svelte/kv-redis-sveltekit>
